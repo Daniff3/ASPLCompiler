@@ -20,7 +20,7 @@ public class Lexicon {
 	
 	public Lexicon (FileReader f) {
 		filereader = f;
-		String lex;
+
 		try{
 			char valor=(char) 0;
 			while(valor!=(char) -1){

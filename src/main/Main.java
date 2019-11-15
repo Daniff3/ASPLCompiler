@@ -3,8 +3,11 @@ package main;
 import java.io.FileReader;
 import java.io.IOException;
 
-import ast.*;
-import parser.*;
+import ast.AstCss;
+import parser.Lexicon;
+import parser.Parser;
+import parser.Token;
+import parser.TokensId;
 
 public class Main {
 
@@ -12,8 +15,8 @@ public class Main {
 		FileReader filereader = new FileReader ("EX1.CSS");
 		Lexicon lex = new Lexicon(filereader);
 		listaTokens(lex);
-		//Parser parser = new Parser (lex);
-		//AstCss ast = parser.parse();
+		Parser parser = new Parser (lex);
+		AstCss ast = parser.parse();
 	}
 
 	//Auxiliares
