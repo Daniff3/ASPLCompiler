@@ -109,7 +109,8 @@ public class Parser {
 				value = parseAlignments();
 				break;
 			case FONT_SIZE:
-				value = tAnt.getLexeme();
+			    	token = lex.getToken();
+				value = token.getLexeme();
 				break;
 			default:
 				errorSintactico("Encontrado " + token.getLexeme() + ". Se esperaba una definicion de color, font-style, font-size o text-align.", token.getLine());
@@ -164,14 +165,14 @@ public class Parser {
 			case CENTER:
 				return ("center");
 			default:
-				errorSintactico("Encontrado " + token.getLexeme() + ". Se esperaba una orientación de texto: left, right o center.", token.getLine());
+				errorSintactico("Encontrado " + token.getLexeme() + ". Se esperaba una orientaciÃ³n de texto: left, right o center.", token.getLine());
 				return null;
 		}
 	}
 	
-	//Gestión de Errores Sintáctico
+	//GestiÃ³n de Errores SintÃ¡ctico
 	void errorSintactico (String e, int line) {
 		errorSint = true;
-		System.out.println("Error Sintáctico : "+e+" en la línea "+line);
+		System.out.println("Error SintÃ¡ctico : "+e+" en la lÃ­nea "+line);
 	}
 }
