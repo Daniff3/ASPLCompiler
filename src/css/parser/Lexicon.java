@@ -1,4 +1,4 @@
-package parser;
+package css.parser;
 
 import java.io.FileReader;
 import java.util.*;
@@ -120,24 +120,22 @@ public class Lexicon {
 	// ++
 	// ++ Operaciones para el Sintactico
 	// ++
-	// Devolver el último token
+	
+	// Retroceder al anterior token
 	public void returnLastToken () {
 		i--;
 	}
 	
-	// Get Token
+	// Get Token actual y avanza al siguiente token
 	public Token getToken () {
 		if (i < tokens.size()) {
 			return tokens.get(i++);
 		}
 		return new Token (TokensId.EOF,"EOF", line);
 	}	
-	// ++
-	// ++ Operaciones para el Sintactico
-	// ++
 
 	//Privadas
-	String getSize (String lexStart) throws IOException {
+	private String getSize (String lexStart) throws IOException {
 		String lexReturned = lexStart;
 		char valor;
 		do {
@@ -160,7 +158,7 @@ public class Lexicon {
 		return lexReturned;
 	}
 
-	String getText (String lexStart) throws IOException {
+	private String getText (String lexStart) throws IOException {
 		String lexReturned = lexStart;
 		char valor = nextChar();
 		while (Character.isDigit(valor) || Character.isAlphabetic(valor) || (valor == '-')) {
@@ -171,7 +169,7 @@ public class Lexicon {
 		return lexReturned;
 	}
 	
-	char nextChar() throws IOException{
+	private char nextChar() throws IOException{
 		if (charBuffUsed) {
 			charBuffUsed = false;
 			return charBuff;
@@ -182,12 +180,12 @@ public class Lexicon {
 		}
 	}
 	
-	void returnChar (char r) {
+	private void returnChar (char r) {
 		charBuffUsed = true;
 		charBuff = r;
 	}
 
-	void errorLexico (String e) {
+	private void errorLexico (String e) {
 		System.out.println("Error léxico en : "+e);
 	}
 }

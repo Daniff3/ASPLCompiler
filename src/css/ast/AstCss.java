@@ -1,6 +1,6 @@
-package ast;
+package css.ast;
 
-import visitor.*;
+import css.visitor.Visitor;
 
 public interface AstCss {
 	Object accept(Visitor visitor, Object param);

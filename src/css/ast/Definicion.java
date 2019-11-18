@@ -1,6 +1,6 @@
-package ast;
+package css.ast;
 
-import visitor.Visitor;
+import css.visitor.Visitor;
 
 public class Definicion implements AstCss {
 

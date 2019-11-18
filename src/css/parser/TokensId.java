@@ -1,4 +1,4 @@
-package parser;
+package css.parser;
 
 public enum TokensId {
 	EOF, 

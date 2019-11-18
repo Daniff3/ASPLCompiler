@@ -1,8 +1,8 @@
-package ast;
+package css.ast;
 
 import java.util.List;
 
-import visitor.Visitor;
+import css.visitor.Visitor;
 
 public class Regla implements AstCss {
 

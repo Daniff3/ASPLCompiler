@@ -1,12 +1,11 @@
-package parser;
+package css.parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ast.AstCss;
-import ast.Definicion;
-import ast.Program;
-import ast.Regla;
+import css.ast.Definicion;
+import css.ast.Program;
+import css.ast.Regla;
 
 public class Parser {
 	
@@ -16,13 +15,8 @@ public class Parser {
 	public Parser (Lexicon lex) {
 		this.lex = lex;
 	}
-	
-	public AstCss parse() {
-		AstCss ast = null;
-		return ast;
-	}
 
-	public Program parseProgram() {
+	public Program parse() {
 		Program program = null;
 		List<Regla> reglas = new ArrayList<Regla>();
 		Token token = lex.getToken();
