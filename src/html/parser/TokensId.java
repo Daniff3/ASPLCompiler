@@ -2,7 +2,7 @@ package html.parser;
 
 public enum TokensId {
 	  HTML,
-	  HTMLCLOSE,
+	  HTMLC,
 	  EQUAL,
 	  CLOSE,
 	  HEAD,

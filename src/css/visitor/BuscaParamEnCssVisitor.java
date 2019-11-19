@@ -15,6 +15,7 @@ public class BuscaParamEnCssVisitor implements Visitor {
 		for (Regla regla: program.reglas)
 			if (regla.identificador.equals(ident))
 				return (String) regla.accept(this, null);
+		
 		return null;
 	}
 
@@ -23,6 +24,7 @@ public class BuscaParamEnCssVisitor implements Visitor {
 		for (Definicion definicion: regla.definiciones)
 			if (definicion.campo.equals(label))
 				return (String) definicion.accept(this, null);
+		
 		return null;
 	}
 

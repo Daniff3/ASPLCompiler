@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import css.parser.Token;
-import css.parser.TokensId;
-
 public class Lexicon {
 
 	// Gestión de tokens
@@ -34,50 +31,241 @@ public class Lexicon {
 				valor=nextChar();
 			
 				switch( (char) valor ) {
+// * Etiqueta
 				case '<':
 					valor = nextChar();
+// ** Cerrar etiqueta
 					if ( (char) valor == '/' ) {
 						valor = nextChar();
 						switch( (char) valor ) {
 						case 'h':
+							lex = getLexeme("</h", '>');
+							switch(lex) {
+							case "</html>":
+								tokens.add(new Token(TokensId.HTMLC, lex, line));
+								break;	
+							case "</head>":
+								tokens.add(new Token(TokensId.HEADC, lex, line));
+								break;
+							case "</h1>":
+								tokens.add(new Token(TokensId.H1C, lex, line));
+								break;
+							case "</h2>":
+								tokens.add(new Token(TokensId.H2C, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+						
+						case 't':
+							lex = getLexeme("</t", '>');
+							switch(lex) {
+							case "</title>":
+								tokens.add(new Token(TokensId.TITLEC, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+						
+						case 'b':
+							lex = getLexeme("</b", '>');
+							switch(lex) {
+							case "</b>":
+								tokens.add(new Token(TokensId.BOLDC, lex, line));
+								break;
+							case "</body>":
+								tokens.add(new Token(TokensId.BODYC, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
 							
+						case 'p':
+							lex = getLexeme("</p", '>');
+							switch(lex) {
+							case "</p>":
+								tokens.add(new Token(TokensId.PC, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+							
+						case 'i':
+							lex = getLexeme("</i", '>');
+							switch(lex) {
+							case "</i>":
+								tokens.add(new Token(TokensId.ITALICC, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+							
+						case 'u':
+							lex = getLexeme("</u", '>');
+							switch(lex) {
+							case "</u>":
+								tokens.add(new Token(TokensId.UNDERLC, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
 						}
 					}
+// ** Abrir etiqueta
 					else {
+						switch( (char) valor ) {
+						case 'h':
+							lex = getLexeme("<h", '>');
+							switch(lex) {
+							case "<html>":
+								tokens.add(new Token(TokensId.HTML, lex, line));
+								break;	
+							case "<head>":
+								tokens.add(new Token(TokensId.HEAD, lex, line));
+								break;
+							case "<h1>":
+								tokens.add(new Token(TokensId.H1, lex, line));
+								break;
+							case "<h2>":
+								tokens.add(new Token(TokensId.H2, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
 						
+						case 't':
+							lex = getLexeme("<t", '>');
+							switch(lex) {
+							case "<title>":
+								tokens.add(new Token(TokensId.TITLE, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+							
+						case 'l':
+							lex = getLexeme("<l", 'k');
+							switch(lex) {
+							case "<link":
+								tokens.add(new Token(TokensId.LINK, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+						
+						case 'b':
+							lex = getLexeme("<b", '>');
+							switch(lex) {
+							case "<b>":
+								tokens.add(new Token(TokensId.BOLD, lex, line));
+								break;
+							case "<body>":
+								tokens.add(new Token(TokensId.BODY, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+							
+						case 'p':
+							lex = getLexeme("<p", '>');
+							switch(lex) {
+							case "<p>":
+								tokens.add(new Token(TokensId.P, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+							
+						case 'i':
+							lex = getLexeme("<i", '>');
+							switch(lex) {
+							case "<i>":
+								tokens.add(new Token(TokensId.ITALIC, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+							
+						case 'u':
+							lex = getLexeme("<u", '>');
+							switch(lex) {
+							case "<u>":
+								tokens.add(new Token(TokensId.UNDERL, lex, line));
+								break;
+							default:
+								errorLexico("Error en línea " + line);
+								break;
+							}
+							break;
+						}
 					}
 					break;
-					
-				case 'h':
-					
+				
+				case '"':
+					lex = getLexeme("\"", '"');
+					tokens.add(new Token(TokensId.URL, lex, line));
 					break;
-					
-				case 'r':
-					
+				case '=':
+					tokens.add(new Token(TokensId.EQUAL, ""+valor, line));
 					break;
-					
-				case 't':
-					
+				case '>':
+					tokens.add(new Token(TokensId.CLOSE, ""+valor, line));
 					break;
-					
+// * blanks					
 				case '\n':
 					line++;
 					break;
-					
 				case '\r':
 					break;
-					
 				case '\t':
 					break;
-					
 				case (char) -1:
 					break;
-				
 				case ' ':
-					break;
-					
+					break;				
 				default:
-					//TODO get text bla bla
+					lex = getLexemeTEXT("" + (char) valor);
+					switch(lex) {
+// ** href
+					case "href":
+						tokens.add(new Token(TokensId.HREF, lex, line));
+						break;
+// ** rel
+					case "rel":
+						tokens.add(new Token(TokensId.REL, lex, line));
+						break;
+// ** type
+					case "type":
+						tokens.add(new Token(TokensId.TYPE, lex, line));
+						break;
+// ** text	
+					default:
+						tokens.add(new Token(TokensId.TEXT, lex, line));
+		          }
 				}
 			}
 			filereader.close();
@@ -117,7 +305,7 @@ public class Lexicon {
 		return lexReturned;
 	}
 	
-	// Saca del fichero un lexema de texto que termina con cualquier caracter que esté contenido en charText.
+	// Saca del fichero un lexema de texto que termina con cualquier caracter que no esté contenido en charText.
 	// Necesita devolver el último caracter porque la condición del es con un caracter que no
 	// pertenece al lexema
 	private String getLexemeTEXT (String lexStart) throws IOException {
@@ -133,7 +321,7 @@ public class Lexicon {
 	
 	// Crea un conjunto con los caracteres permitidos para los lexemas de texto (TEXT)
 	private void loadSet () {
-		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:+-*/()[]!?";
+		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:+-*/()[]!? ";
 		int i=0;
 		Character a = new Character('a');
 		while (i < s.length()) {
