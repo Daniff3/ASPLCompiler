@@ -13,6 +13,9 @@ public class Main {
 		FileReader filereader = new FileReader ("EX4.html");
 		Lexicon lex = new Lexicon(filereader);
 		listaTokens(lex);
+		
+		//RenderVisitor render = new Render(htmlAst, new BuscaParamEnCssVisitor(), defaultCss, cssAst);
+		//FormatedPage fp = render.renderPage();
 	}
 
 	//Auxiliares

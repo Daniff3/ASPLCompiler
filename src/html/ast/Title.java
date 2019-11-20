@@ -2,17 +2,17 @@ package html.ast;
 
 import html.visitor.Visitor;
 
-public class Texto implements AstHtml, Bloque {
-
-	public String text;
+public class Title implements AstHtml {
 	
-	public Texto(String text) {
-		this.text = text;
+	public String title;
+	
+	public Title(String title) {
+		this.title = title;
 	}
-	
+
 	@Override
 	public Object accept(Visitor visitor, Object param) {
 		return visitor.visit(this, param);
-	}
+	}	
 	
 }

@@ -1,11 +1,13 @@
 package html.visitor;
 
-import css.ast.Definicion;
-import css.ast.Program;
-import css.ast.Regla;
+import html.ast.*;
 
 public interface Visitor {
 	Object visit(Program program, Object param);
-	Object visit(Regla regla, Object param);
-	Object visit(Definicion definicion, Object param);
+	Object visit(Head head, Object param);
+	Object visit(Body body, Object param);
+	Object visit(Title title, Object param);
+	Object visit(Link link, Object param);
+	Object visit(Parrafo parrafo, Object param);
+	Object visit(Bloque bloque, Object param);
 }

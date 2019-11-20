@@ -2,13 +2,11 @@ package html.ast;
 
 import html.visitor.Visitor;
 
-public class TextoEnriquecido implements AstHtml, Bloque {
+public class H1 implements AstHtml, Parrafo {
 
 	public String text;
-	public String decoration;
 	
-	public TextoEnriquecido(String text, String decoration) {
-		this.decoration = decoration;
+	public H1(String text) {
 		this.text = text;
 	}
 	

@@ -1,15 +1,13 @@
 package html.ast;
 
-import java.util.List;
-
 import html.visitor.Visitor;
 
-public class Body implements AstHtml {
+public class H2 implements AstHtml, Parrafo {
 
-	public List<Parrafo> parrafos;
+public String text;
 	
-	public Body(List<Parrafo> parrafos) {
-		this.parrafos = parrafos;
+	public H2(String text) {
+		this.text = text;
 	}
 	
 	@Override

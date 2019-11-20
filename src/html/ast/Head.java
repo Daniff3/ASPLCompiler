@@ -1,13 +1,13 @@
 package html.ast;
 
-import css.visitor.Visitor;
+import html.visitor.Visitor;
 
 public class Head implements AstHtml {
 
-	public String title;
+	public Title title;
 	public Link link;
 	
-	public Head(String title, Link link) {
+	public Head(Title title, Link link) {
 		this.title = title;
 		this.link = link;
 	}
