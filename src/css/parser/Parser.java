@@ -24,18 +24,18 @@ public class Parser {
 		while (token.getToken() == TokensId.IDENTIFICADOR) {
 			lex.returnLastToken();
 			Regla regla = parseRegla();
-			if( (regla!= null) && (!errorSint) ) {
+			if( (regla!= null) && (!errorSint) )
 				reglas.add(regla);
-			}
+		
 			token = lex.getToken();
 		}
-		if(token.getToken() != TokensId.EOF) {
-			errorSintactico("Encontrado " + token.getLexeme() 
-				+ ". Se esperaba el fin de fichero.", token.getLine());
-		}
-		if( !errorSint ) {
+		
+		if(token.getToken() != TokensId.EOF)
+			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba el fin de fichero.", token.getLine());
+		
+		if( !errorSint ) 
 			program = new Program(reglas);
-		}
+		
 		return program;
 	}
 	
@@ -59,12 +59,12 @@ public class Parser {
 	      token = lex.getToken();
 	    }
 	    
-	    if( token.getToken() != TokensId.CLOSE_BRACKETS ) {
+	    if( token.getToken() != TokensId.CLOSE_BRACKETS )
 	    	errorSintactico("Encontrado " + token.getLexeme() + ". Se esperaba '}'", token.getLine());
-			return null;
-	    }
-	    
-	    regla = new Regla(identificador, definiciones);
+		
+		if( !errorSint )
+			regla = new Regla(identificador, definiciones);
+			
 	    return regla;
 	  }
 		
@@ -73,10 +73,8 @@ public class Parser {
 		Definicion definicion = parseVarconf();
 		Token token = lex.getToken();
 		
-		if( token.getToken() != TokensId.SEMICOLON ) {
+		if( token.getToken() != TokensId.SEMICOLON )
 			errorSintactico("Encontrado " + token.getLexeme() + ". Se esperaba ';'", token.getLine());
-			return null;
-		}
 		
 		return definicion;
 	}
@@ -110,9 +108,11 @@ public class Parser {
 				errorSintactico("Encontrado " + token.getLexeme() + ". Se esperaba una definicion de color, font-style, font-size o text-align.", token.getLine());
 				return null;
 	    }
-	    
-	    varconf = new Definicion(label, value);
-	    return varconf;
+		
+		if( !errorSint )
+		    varconf = new Definicion(label, value);
+	
+		return varconf;
 	}
 	
 	private String parseColors() {
