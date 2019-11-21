@@ -24,6 +24,8 @@ public class Parser {
 		Head head = parseHead();
 		Body body = parseBody();
 					
+		token = lex.getToken();
+		
 		if(token.getToken() != TokensId.HTMLC) 
 			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba </html>.", token.getLine());
 		
@@ -47,6 +49,7 @@ public class Parser {
 		
 		Title title = parseTitle();
 		Link link = parseLink();	
+		token = lex.getToken();
 		
 		if(token.getToken() != TokensId.HEADC)
 			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba </head>.", token.getLine());
@@ -89,36 +92,57 @@ public class Parser {
 		Token token = lex.getToken();
 		
 		if( token.getToken() != TokensId.LINK ) 
-			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba <link>.", token.getLine());
+			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba <link.", token.getLine());
 		
 		token = lex.getToken();
-		
-		while ( token.getToken() == TokensId.HREF || 
-				token.getToken() == TokensId.REL || 
-				token.getToken() == TokensId.TYPE) 
-		{
-			Token tokenEq = lex.getToken();
-			Token tokenLex = lex.getToken();
-			String valor = tokenLex.getLexeme();
-
-			if(tokenEq.getToken() != TokensId.EQUAL)
-				errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba =.", token.getLine());
-			if(tokenLex.getToken() != TokensId.URL) 
-				errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba URL.", token.getLine());
-
-			switch(token.getToken()){
-				case HREF:
-					href = valor;
-				case REL:
-					rel = valor;
-				case TYPE:
-					type = valor;
-				default:
-					errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba href, rel o type.", token.getLine());
-			}
-
+		if ( token.getToken() == TokensId.HREF ) {
 			token = lex.getToken();
-		}		
+			if(token.getToken() == TokensId.EQUAL) {
+				token = lex.getToken();
+				if(token.getToken() == TokensId.URL) 
+					href = token.getLexeme().replace("\"", "");
+				else
+					errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba URL.", token.getLine());
+			}
+			else 
+				errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba =.", token.getLine());
+		}
+		else 
+			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba href.", token.getLine());
+		
+		token = lex.getToken();
+		if ( token.getToken() == TokensId.REL ) {
+			token = lex.getToken();
+			if(token.getToken() == TokensId.EQUAL) {
+				token = lex.getToken();
+				if(token.getToken() == TokensId.URL) 
+					rel = token.getLexeme().replace("\"", "");
+				else
+					errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba URL.", token.getLine());
+			}
+			else 
+				errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba =.", token.getLine());
+		}
+		else 
+			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba rel.", token.getLine());
+		
+		token = lex.getToken();
+		if ( token.getToken() == TokensId.TYPE ) {
+			token = lex.getToken();
+			if(token.getToken() == TokensId.EQUAL) {
+				token = lex.getToken();
+				if(token.getToken() == TokensId.URL) 
+					type = token.getLexeme().replace("\"", "");
+				else
+					errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba URL.", token.getLine());
+			}
+			else 
+				errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba =.", token.getLine());
+		}
+		else 
+			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba type.", token.getLine());
+		
+		token = lex.getToken();
 
 		if(token.getToken() != TokensId.CLOSE) 
 			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba '>'.", token.getLine());
@@ -148,11 +172,17 @@ public class Parser {
 		{
 			switch(token.getToken()){
 				case H1:
+					lex.returnLastToken();
 					parrafos.add(parseH1());
+					break;
 				case H2:
+					lex.returnLastToken();
 					parrafos.add(parseH2());
+					break;
 				case P:
+					lex.returnLastToken();
 					parrafos.add(parseP());
+					break;
 				default:
 					errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba h1, h2 o p", token.getLine());
 			}		
@@ -196,7 +226,7 @@ public class Parser {
 		H2 h2 = null;
 		Token token = lex.getToken();
 		
-		if( token.getToken() != TokensId.H1 )
+		if( token.getToken() != TokensId.H2 )
 			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba <h2>.", token.getLine());
 
 		token = lex.getToken();
@@ -207,7 +237,7 @@ public class Parser {
 		String text = token.getLexeme();
 		token = lex.getToken();	
 		
-		if(token.getToken() != TokensId.H1C) 
+		if(token.getToken() != TokensId.H2C) 
 			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba </h2>.", token.getLine());
 		
 		if( !errorSint ) 
@@ -233,15 +263,23 @@ public class Parser {
 		{
 			switch(token.getToken()){
 				case BOLD:
+					lex.returnLastToken();
 					bloques.add(parseBoldText());
+					break;
 				case ITALIC:
+					lex.returnLastToken();
 					bloques.add(parseItalicText());
+					break;
 				case UNDERL:
+					lex.returnLastToken();
 					bloques.add(parseUnderlinedText());
+					break;
 				case TEXT:
+					lex.returnLastToken();
 					bloques.add(parseTexto());
+					break;
 				default:
-				errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba <b>, <i>, <u> o texto.", token.getLine());
+					errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba <b>, <i>, <u> o texto.", token.getLine());
 			}		
 			token = lex.getToken();
 		}
@@ -260,7 +298,7 @@ public class Parser {
 		Token token = lex.getToken();
 		
 		if( token.getToken() != TokensId.TEXT )
-			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba TEXT.", token.getLine());
+			errorSintactico("Encontrado "+token.getLexeme()+". Se esperaba texto.", token.getLine());
 
 		String text = token.getLexeme();
 		

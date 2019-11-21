@@ -1,5 +1,5 @@
 package html.ast;
 
-public interface Parrafo {
+public interface Parrafo extends AstHtml {
 
 }

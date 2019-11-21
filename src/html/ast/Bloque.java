@@ -1,5 +1,5 @@
 package html.ast;
 
-public interface Bloque {
+public interface Bloque extends AstHtml {
 
 }

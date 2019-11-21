@@ -7,6 +7,6 @@ public class Render {
 
 	AstHtml astHtml;
 	AstCss astCss;
-	FormatedPage fp;
+	FormattedPage fp;
 	
 }
