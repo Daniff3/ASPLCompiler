@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import css.ast.AstCss;
-import css.parser.Lexicon;
-import css.parser.Parser;
+import css.parser.LexiconCss;
+import css.parser.ParserCss;
 import css.parser.Token;
 import css.parser.TokensId;
 import css.visitor.BuscaParamEnCssVisitor;
@@ -15,9 +15,9 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		FileReader filereader = new FileReader ("EX1.CSS");
-		Lexicon lex = new Lexicon(filereader);
+		LexiconCss lex = new LexiconCss(filereader);
 		//listaTokens(lex);
-		Parser parser = new Parser (lex);
+		ParserCss parser = new ParserCss (lex);
 		AstCss ast = parser.parse();
 		
 		if( ast != null) {
@@ -33,7 +33,7 @@ public class Main {
 
 	//Auxiliares
 	//Lista de Tokens
-	static void listaTokens (Lexicon lex) {
+	static void listaTokens (LexiconCss lex) {
 		Token t = lex.getToken();
 		while (t.getToken() != TokensId.EOF) {
 			System.out.println(t.toString());

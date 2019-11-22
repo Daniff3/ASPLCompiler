@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class Lexicon {
+public class LexiconHtml {
 
 	// Gestión de tokens
 	List<Token> tokens = new ArrayList<Token>();
@@ -20,7 +20,7 @@ public class Lexicon {
 	
 	HashSet<Character> charText = new HashSet<Character>();
 	
-	public Lexicon (FileReader f) {
+	public LexiconHtml (FileReader f) {
 		filereader = f;
 		String lex;
 		loadSet();
@@ -31,10 +31,10 @@ public class Lexicon {
 				valor=nextChar();
 			
 				switch( (char) valor ) {
-// * Etiqueta
+// * Etiquetas
 				case '<':
 					valor = nextChar();
-// ** Cerrar etiqueta
+// ** Etiquetas de cierre
 					if ( (char) valor == '/' ) {
 						valor = nextChar();
 						switch( (char) valor ) {
@@ -123,7 +123,7 @@ public class Lexicon {
 							break;
 						}
 					}
-// ** Abrir etiqueta
+// ** Etiquetas de apertura
 					else {
 						switch( (char) valor ) {
 						case 'h':
@@ -224,7 +224,7 @@ public class Lexicon {
 						}
 					}
 					break;
-				
+// * otros				
 				case '"':
 					lex = getLexeme("\"", '"');
 					tokens.add(new Token(TokensId.URL, lex, line));

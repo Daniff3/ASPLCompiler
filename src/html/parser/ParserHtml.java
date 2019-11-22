@@ -5,12 +5,12 @@ import java.util.List;
 
 import html.ast.*;
 
-public class Parser {
+public class ParserHtml {
 	
-	Lexicon lex;
+	LexiconHtml lex;
 	boolean errorSint = false;
 	
-	public Parser (Lexicon lex) {
+	public ParserHtml (LexiconHtml lex) {
 		this.lex = lex;
 	}
 

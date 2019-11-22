@@ -23,9 +23,8 @@ public class PrintCssAstVisitor implements Visitor {
 	public Object visit(Regla regla, Object param) {
 		String resultado = "";
 		
-		for (Definicion definicion: regla.definiciones) {
+		for (Definicion definicion: regla.definiciones)
 			resultado = resultado + sp + (String) definicion.accept(this, (String) param);
-		}
 		
 		return regla.identificador + " {\n" + resultado + "}\n";
 	}

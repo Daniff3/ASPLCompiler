@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import html.ast.AstHtml;
-import html.parser.Lexicon;
-import html.parser.Parser;
+import html.parser.LexiconHtml;
+import html.parser.ParserHtml;
 import html.parser.Token;
 import html.parser.TokensId;
 import html.visitor.BuscaCssEnHtmlVisitor;
@@ -15,10 +15,9 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		FileReader filereader = new FileReader ("EX4.html");
-		Lexicon lex = new Lexicon(filereader);
+		LexiconHtml lex = new LexiconHtml(filereader);
 		//listaTokens(lex);
-		
-		Parser parser = new Parser (lex);
+		ParserHtml parser = new ParserHtml (lex);
 		AstHtml ast = parser.parse();
 		
 		if( ast != null) {
@@ -30,14 +29,11 @@ public class Main {
 		    String busqueda = (String) ast.accept(buscaHtml, null);
 		    System.out.println(busqueda);
 		}
-				
-		//RenderVisitor render = new Render(htmlAst, new BuscaParamEnCssVisitor(), defaultCss, cssAst);
-		//FormatedPage fp = render.renderPage();
 	}
 
 	//Auxiliares
 	//Lista de Tokens
-	static void listaTokens (Lexicon lex) {
+	static void listaTokens (LexiconHtml lex) {
 		Token t = lex.getToken();
 		while (t.getToken() != TokensId.EOF) {
 			System.out.println(t.toString());

@@ -1,5 +1,6 @@
 package render;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormattedPage {
@@ -8,6 +9,10 @@ public class FormattedPage {
 	int text_line;
 	List<FormattedLine> lines;
 
+	public FormattedPage() {
+		this.lines = new ArrayList<FormattedLine>();
+	}
+	
 	public void addLine(FormattedLine line){
 		this.lines.add(line);
 	}
@@ -31,5 +36,5 @@ public class FormattedPage {
 	public int getText_line(){
 		return text_line;
 	}
-	
+		
 }

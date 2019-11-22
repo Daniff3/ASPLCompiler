@@ -1,11 +1,16 @@
 package render;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormattedLine {
 
 	String text_align;
 	List<FormattedText> texts; 
+	
+	public FormattedLine() {
+		this.texts = new ArrayList<FormattedText>();
+	}
 	
 	public void addText(FormattedText ft){
 		this.texts.add(ft);
@@ -22,5 +27,9 @@ public class FormattedLine {
 	public void setText_align(String text_align){
 		this.text_align = text_align;
 	}
-	
+
+	public int getMetrics() {
+		return 1;
+	}
+		
 }

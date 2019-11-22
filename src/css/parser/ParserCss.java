@@ -7,12 +7,12 @@ import css.ast.Definicion;
 import css.ast.Program;
 import css.ast.Regla;
 
-public class Parser {
+public class ParserCss {
 	
-	Lexicon lex;
+	LexiconCss lex;
 	boolean errorSint = false;
 	
-	public Parser (Lexicon lex) {
+	public ParserCss (LexiconCss lex) {
 		this.lex = lex;
 	}
 

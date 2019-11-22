@@ -40,12 +40,8 @@ public class FormattedText {
 		this.font_style = font_style;
 	}
 
-	public double calculateMetrics() {
-		return 1;
-	}
-	
 	public double getMetrics() {
-		calculateMetrics();
+		this.metrics = 1;
 		return metrics;
 	}
 
@@ -60,5 +56,5 @@ public class FormattedText {
 	public void setText(String text) {
 		this.text = text;
 	}
-		
+			
 }

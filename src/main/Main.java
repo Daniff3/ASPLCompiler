@@ -1,5 +1,6 @@
-package render;
+package main;
 
+import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,39 +14,48 @@ import html.parser.LexiconHtml;
 import html.parser.ParserHtml;
 import html.visitor.BuscaCssEnHtmlVisitor;
 import html.visitor.RenderVisitor;
+import render.FormattedPage;
 
 public class Main {
 
-    public static void main(String[] args) {
-        AstHtml htmlAst = null;
-        AstCss cssAst = null;
-        AstCss defaultAst = null;
-
-        try {
-            htmlAst = creaArbolHtml("EX4.html");
-            System.out.println("Creado el arbol AST del HTML");
-
+	private static FormattedPage fp;
+	
+	public static void main(String[] args) throws IOException {
+        fp = loadPage();
+        createAndShowGUI();
+    }
+	
+	private static void createAndShowGUI() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainWindow frame = new MainWindow(fp);
+					frame.setTitle(fp.getPage_title());
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	private static FormattedPage loadPage() {
+		try {
+            AstHtml htmlAst = creaArbolHtml("EX4.html");
             BuscaCssEnHtmlVisitor bCss = new BuscaCssEnHtmlVisitor();
             String css = (String) htmlAst.accept(bCss, null);
-            System.out.println("Extraido el fichero CSS");
-
-            cssAst = creaArbolCss(css);
-            System.out.println("Creado el arbol AST del CSS");
-
-            defaultAst = creaArbolCss("Default.css");
-            System.out.println("Creado el arbol AST del CSS por defecto");
-
+            AstCss cssAst = creaArbolCss(css);
+            AstCss defaultAst = creaArbolCss("Default.css");
             RenderVisitor render = new RenderVisitor(htmlAst, new BuscaParamEnCssVisitor(), defaultAst, cssAst);
-            FormattedPage fp = render.getFormattedPage();
-            PrintFormattedPage pp = new PrintFormattedPage(fp);
-            pp.printPage();
+            return render.getFormattedPage();
         } 
         catch (IOException e) {
             System.out.println("Ha habido algun problema intentando cargar los ficheros");
         }
-    }
-
-    private static AstHtml creaArbolHtml(String file) throws FileNotFoundException {
+		return null;
+	}
+	
+	private static AstHtml creaArbolHtml(String file) throws FileNotFoundException {
         FileReader fileHtml = new FileReader(file);
         LexiconHtml lexHtml = new LexiconHtml(fileHtml);
         ParserHtml parserHtml = new ParserHtml(lexHtml);
@@ -58,5 +68,5 @@ public class Main {
         ParserCss parserCss = new ParserCss(lexCss);
         return parserCss.parse();
     }
-
+    
 }
