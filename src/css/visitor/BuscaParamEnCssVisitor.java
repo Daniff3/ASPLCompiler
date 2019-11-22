@@ -8,12 +8,12 @@ import css.ast.Regla;
 public class BuscaParamEnCssVisitor implements Visitor {
 
 	String label = null;
-	String ident = null;
+	String identificador = null;
 	
 	@Override
 	public Object visit(Program program, Object param) {
 		for (Regla regla: program.reglas)
-			if (regla.identificador.equals(ident))
+			if (regla.identificador.equals(identificador))
 				return (String) regla.accept(this, null);
 		
 		return null;
@@ -34,7 +34,7 @@ public class BuscaParamEnCssVisitor implements Visitor {
 	}
 
 	public String search(String identificador, String label, AstCss program) {
-		this.ident = identificador;
+		this.identificador = identificador;
 		this.label = label;
 		
 		if (identificador == null || label == null)
