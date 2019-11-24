@@ -16,7 +16,10 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		FileReader filereader = new FileReader ("EX4.html");
 		LexiconHtml lex = new LexiconHtml(filereader);
-		//listaTokens(lex);
+		listaTokens(lex);
+		
+		filereader = new FileReader ("EX4.html");
+		lex = new LexiconHtml(filereader);
 		ParserHtml parser = new ParserHtml (lex);
 		AstHtml ast = parser.parse();
 		
@@ -27,7 +30,7 @@ public class Main {
 			
 			BuscaCssEnHtmlVisitor buscaHtml = new BuscaCssEnHtmlVisitor();
 		    String busqueda = (String) ast.accept(buscaHtml, null);
-		    System.out.println(busqueda);
+		    System.out.println("\nEl fichero css del html es: "+busqueda);
 		}
 	}
 
@@ -39,7 +42,7 @@ public class Main {
 			System.out.println(t.toString());
 			t = lex.getToken();
 		}
-		System.out.println ("\nFin de fichero. \n"+t.toString());	
+		System.out.println ("\nFin de fichero. \n"+t.toString()+"\n");	
 	}
 	
 }

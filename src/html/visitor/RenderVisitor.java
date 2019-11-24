@@ -70,7 +70,7 @@ public class RenderVisitor implements Visitor {
 			
 		font_size_str = font_size_str.replace("px", "");
 		double font_size = Double.parseDouble(font_size_str);
-		FormattedText ft = new FormattedText(color, font_size, font_style, h1.text);
+		FormattedText ft = new FormattedText(color, font_size, font_style, h1.text.trim());
 		FormattedLine fl = new FormattedLine();
 		fl.addText(ft);
 		fl.setText_align(text_align);
@@ -95,7 +95,7 @@ public class RenderVisitor implements Visitor {
 			
 		font_size_str = font_size_str.replace("px", "");
 		double font_size = Double.parseDouble(font_size_str);
-		FormattedText ft = new FormattedText(color, font_size, font_style, h2.text);
+		FormattedText ft = new FormattedText(color, font_size, font_style, h2.text.trim());
 		FormattedLine fl = new FormattedLine();
 		fl.addText(ft);
 		fl.setText_align(text_align);
@@ -132,7 +132,7 @@ public class RenderVisitor implements Visitor {
 			
 		font_size_str = font_size_str.replace("px", "");
 		double font_size = Double.parseDouble(font_size_str);
-		FormattedText ft = new FormattedText(color, font_size, font_style, texto.text);
+		FormattedText ft = new FormattedText(color, font_size, font_style, texto.text.trim());
 		return ft;
 	}
 	@Override
@@ -149,7 +149,7 @@ public class RenderVisitor implements Visitor {
 			
 		font_size_str = font_size_str.replace("px", "");
 		double font_size = Double.parseDouble(font_size_str);
-		FormattedText ft = new FormattedText(color, font_size, font_style, bt.text);
+		FormattedText ft = new FormattedText(color, font_size, font_style, bt.text.trim());
 		return ft;
 	}
 	@Override
@@ -166,7 +166,7 @@ public class RenderVisitor implements Visitor {
 			
 		font_size_str = font_size_str.replace("px", "");
 		double font_size = Double.parseDouble(font_size_str);
-		FormattedText ft = new FormattedText(color, font_size, font_style, it.text);
+		FormattedText ft = new FormattedText(color, font_size, font_style, it.text.trim());
 		return ft;
 	}
 	@Override
@@ -183,7 +183,7 @@ public class RenderVisitor implements Visitor {
 			
 		font_size_str = font_size_str.replace("px", "");
 		double font_size = Double.parseDouble(font_size_str);
-		FormattedText ft = new FormattedText(color, font_size, font_style, ut.text);
+		FormattedText ft = new FormattedText(color, font_size, font_style, ut.text.trim());
 		return ft;
 	}	
 

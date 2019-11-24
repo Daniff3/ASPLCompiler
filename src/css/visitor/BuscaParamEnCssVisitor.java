@@ -9,7 +9,7 @@ public class BuscaParamEnCssVisitor implements Visitor {
 
 	String label = null;
 	String identificador = null;
-	
+
 	@Override
 	public Object visit(Program program, Object param) {
 		for (Regla regla: program.reglas)

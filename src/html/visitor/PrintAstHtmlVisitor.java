@@ -38,9 +38,9 @@ public class PrintAstHtmlVisitor implements Visitor {
 
 	@Override
 	public Object visit(Link link, Object param) {
-		String resultado = "\t\t<link href=" + link.href + " ";
-		resultado += " rel=" + link.rel + " ";
-		resultado += " type=" + link.type + ">\n";
+		String resultado = "\t\t<link href=\"" + link.href + "\" ";
+		resultado += " rel=\"" + link.rel + "\" ";
+		resultado += " type=\"" + link.type + "\">\n";
 		return resultado;
 	}
 	

@@ -14,9 +14,12 @@ import css.visitor.PrintCssAstVisitor;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		FileReader filereader = new FileReader ("EX1.CSS");
+		FileReader filereader = new FileReader ("EX1.css");
 		LexiconCss lex = new LexiconCss(filereader);
-		//listaTokens(lex);
+		listaTokens(lex);
+		
+		filereader = new FileReader ("EX1.css");
+		lex = new LexiconCss(filereader);
 		ParserCss parser = new ParserCss (lex);
 		AstCss ast = parser.parse();
 		
@@ -28,7 +31,13 @@ public class Main {
 		
 		BuscaParamEnCssVisitor bCss = new BuscaParamEnCssVisitor();
 	    String busqueda = (String) bCss.search("h1", "color", ast);
-	    System.out.println(busqueda);
+	    System.out.println("La propiedad color del elemento h1 es: " + busqueda);
+	    busqueda = (String) bCss.search("h2", "font-size", ast);
+	    System.out.println("La propiedad font-size del elemento h2 es: " + busqueda);
+	    busqueda = (String) bCss.search("p", "text-align", ast);
+	    System.out.println("La propiedad text-align del elemento p es: " + busqueda);
+	    busqueda = (String) bCss.search("h1", "font-style", ast);
+	    System.out.println("La propiedad font-style del elemento h1 es: " + busqueda);
 	}
 
 	//Auxiliares
@@ -39,6 +48,6 @@ public class Main {
 			System.out.println(t.toString());
 			t = lex.getToken();
 		}
-		System.out.println ("\nFin de fichero. \n"+t.toString());	
+		System.out.println ("\nFin de fichero. \n"+t.toString()+"\n");	
 	}
 }

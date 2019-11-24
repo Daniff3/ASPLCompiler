@@ -26,12 +26,11 @@ public class LexiconHtml {
 		loadSet();
 		
 		try{
-			char valor=(char) 0;
-			while(valor!=(char) -1){
+			char valor = (char) 0;
+			while(valor != (char) -1){
 				valor=nextChar();
-			
+				
 				switch( (char) valor ) {
-// * Etiquetas
 				case '<':
 					valor = nextChar();
 // ** Etiquetas de cierre
@@ -121,6 +120,16 @@ public class LexiconHtml {
 								break;
 							}
 							break;
+						}
+					}
+// ** Comentario
+					else if( (char)valor == '!' ) {
+						valor = nextChar();
+						if( (char) valor == '-') {
+							valor = nextChar();
+							if( (char) valor == '-' ) {
+								consumeComentario();
+							}
 						}
 					}
 // ** Etiquetas de apertura
@@ -224,7 +233,7 @@ public class LexiconHtml {
 						}
 					}
 					break;
-// * otros				
+// * Otros				
 				case '"':
 					lex = getLexeme("\"", '"');
 					tokens.add(new Token(TokensId.URL, lex, line));
@@ -293,6 +302,28 @@ public class LexiconHtml {
 	}	
 	
 	//Privadas
+	private void consumeComentario() throws IOException {
+		char valor = nextChar();
+		
+		while ((char)valor != -1) { // Paramos si termina el fichero
+			if(valor == '\n')
+				line++;
+			else if (valor == '-') {
+				valor=nextChar();
+				if(valor == '\n')
+					line++;
+				else if (valor == '-') {
+					valor=nextChar();
+					if(valor == '\n')
+						line++;
+					else if (valor == '>')
+						break; // O encontramos el cierre de comentario
+				}
+			}
+			valor = nextChar();
+		}		
+	}
+	
 	// Saca del fichero fuente un lexema que comienza por la cadena lexStart y termina en el caracter finChar
 	private String getLexeme (String lexStart, char finChar) throws IOException {
 		String lexReturned = lexStart;

@@ -31,7 +31,7 @@ public class PrintCssAstVisitor implements Visitor {
 
 	@Override
 	public Object visit(Definicion definicion, Object param) {
-		return "    " + definicion.campo + ": " + definicion.valor + "\n";
+		return "    " + definicion.campo + ": " + definicion.valor + ";\n";
 	}
 	
 }

@@ -15,12 +15,12 @@ public class LexiconCss {
 	boolean charBuffUsed = false;
 	char charBuff;
 	int line = 1; // indica la línea del fichero fuente
-	
+		
 	HashSet<Character> charText = new HashSet<Character>();
 	
 	public LexiconCss (FileReader f) {
 		filereader = f;
-
+		
 		try{
 			char valor=(char) 0;
 			while(valor!=(char) -1){
@@ -39,6 +39,7 @@ public class LexiconCss {
 					case ';':
 						tokens.add(new Token(TokensId.SEMICOLON, ";", line));
 						break;
+// blanks
 					case '\n':
 						line++;
 						break;
@@ -50,6 +51,13 @@ public class LexiconCss {
 						break;
 					case ' ':
 						break;
+// Comentario
+					case '/':
+						if ( nextChar() == '*' ) {
+							consumeComentario();
+							break;
+						}
+// Propiedades
 					default:
 						if( Character.isDigit(valor) ) {
 							String valor_entero = getSize(""+valor);
@@ -108,6 +116,9 @@ public class LexiconCss {
 									tokens.add(new Token(TokensId.IDENTIFICADOR, valor_entero, line));
 							}	
 						}
+						else {
+							errorLexico("Caracter no esperado: "+valor+".");
+						}
 				}
 			}
 			filereader.close();
@@ -134,6 +145,23 @@ public class LexiconCss {
 		return new Token (TokensId.EOF,"EOF", line);
 	}	
 
+	private void consumeComentario() throws IOException {
+		char valor=nextChar();
+		
+		while (valor != -1) { // Paramos si termina el fichero
+			if(valor == '\n')
+				line++;
+			else if (valor == '*') {
+				valor=nextChar();
+				if(valor == '\n')
+					line++;
+				else if (valor == '/')
+					break; // O encontramos el cierre de comentario
+			}
+			valor = nextChar();
+		}		
+	}
+	
 	//Privadas
 	private String getSize (String lexStart) throws IOException {
 		String lexReturned = lexStart;
