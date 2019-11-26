@@ -36,6 +36,7 @@ public class Main {
 			public void run() {
 				MainWindow frame = new MainWindow(fp);
 				frame.setTitle(fp.getPage_title());
+				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 			}
 		});

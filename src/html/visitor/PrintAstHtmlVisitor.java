@@ -10,7 +10,7 @@ public class PrintAstHtmlVisitor implements Visitor {
 		resultado += (String) program.head.accept(this, param);
 		resultado += (String) program.body.accept(this, param);
 		resultado += "</html>";
-		return resultado;
+		return "HTML \n-------------------\n" + resultado;
 	}
 
 	@Override

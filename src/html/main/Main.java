@@ -13,25 +13,32 @@ import html.visitor.PrintAstHtmlVisitor;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
-		FileReader filereader = new FileReader ("EX4.html");
-		LexiconHtml lex = new LexiconHtml(filereader);
-		listaTokens(lex);
-		
-		filereader = new FileReader ("EX4.html");
-		lex = new LexiconHtml(filereader);
-		ParserHtml parser = new ParserHtml (lex);
-		AstHtml ast = parser.parse();
-		
-		if( ast != null) {
-			PrintAstHtmlVisitor printVisitor = new PrintAstHtmlVisitor();
-			String htmlAst = (String) ast.accept(printVisitor, null);
-			System.out.println(htmlAst);
+	private static final String HTML_FILE = "EX4.html";
+	
+	public static void main(String[] args) {
+		try {	
+			FileReader filereader = new FileReader (HTML_FILE);
+			LexiconHtml lex = new LexiconHtml(filereader);
+			listaTokens(lex);
 			
-			BuscaCssEnHtmlVisitor buscaHtml = new BuscaCssEnHtmlVisitor();
-		    String busqueda = (String) ast.accept(buscaHtml, null);
-		    System.out.println("\nEl fichero css del html es: "+busqueda);
-		}
+			filereader = new FileReader (HTML_FILE);
+			lex = new LexiconHtml(filereader);
+			ParserHtml parser = new ParserHtml (lex);
+			AstHtml ast = parser.parse();
+			
+			if( ast != null) {
+				PrintAstHtmlVisitor printVisitor = new PrintAstHtmlVisitor();
+				String htmlAst = (String) ast.accept(printVisitor, null);
+				System.out.println(htmlAst);
+				
+				BuscaCssEnHtmlVisitor buscaHtml = new BuscaCssEnHtmlVisitor();
+			    String busqueda = (String) ast.accept(buscaHtml, null);
+			    System.out.println("\nEl fichero css del html es: "+busqueda);
+			}
+		} 
+        catch (IOException e) {
+            System.out.println("Ha habido algun problema intentando cargar los ficheros");
+        }
 	}
 
 	//Auxiliares

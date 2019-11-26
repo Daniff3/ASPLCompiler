@@ -28,7 +28,7 @@ public class FormattedLine {
 		this.text_align = text_align;
 	}
 
-	public int getMetrics() {
+	public double getMetrics() {
 		return 1;
 	}
 		

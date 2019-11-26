@@ -5,7 +5,7 @@ public class FormattedText {
 	String color;
 	double font_size;
 	String font_style;
-	double metrics = -1;
+	double metrics;
 	String text;
 	
 	public FormattedText(String color, double font_size, String font_style, String text) {

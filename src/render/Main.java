@@ -16,29 +16,28 @@ import html.visitor.RenderVisitor;
 
 public class Main {
 
+	private static final String HTML_FILE = "EX4.html";
+	private static final String CSS_DEFAULT_FILE = "Default.css";
+	
     public static void main(String[] args) {
-        AstHtml htmlAst = null;
-        AstCss cssAst = null;
-        AstCss defaultAst = null;
-
-        try {
-            htmlAst = creaArbolHtml("EX4.html");
-            System.out.println("Creado el arbol AST del HTML");
+         try {
+        	AstHtml htmlAst = creaArbolHtml(HTML_FILE);
+            System.out.println("Creamos el AST del HTML");
 
             BuscaCssEnHtmlVisitor bCss = new BuscaCssEnHtmlVisitor();
             String css = (String) htmlAst.accept(bCss, null);
-            System.out.println("Extraido el fichero CSS");
+            System.out.println("Cogemos el fichero CSS asociado al HTML");
 
-            cssAst = creaArbolCss(css);
-            System.out.println("Creado el arbol AST del CSS");
+            AstCss cssAst = creaArbolCss(css);
+            System.out.println("Creamos el AST del CSS asociado al HTML");
 
-            defaultAst = creaArbolCss("Default.css");
-            System.out.println("Creado el arbol AST del CSS por defecto");
+            AstCss defaultAst = creaArbolCss(CSS_DEFAULT_FILE);
+            System.out.println("Creamos el AST del CSS por defecto");
 
             RenderVisitor render = new RenderVisitor(htmlAst, new BuscaParamEnCssVisitor(), defaultAst, cssAst);
             FormattedPage fp = render.getFormattedPage();
-            PrintFormattedPage pp = new PrintFormattedPage(fp);
-            pp.printPage();
+            PrintFormattedPage pp = new PrintFormattedPage();
+            pp.printPage(fp);
         } 
         catch (IOException e) {
             System.out.println("Ha habido algun problema intentando cargar los ficheros");

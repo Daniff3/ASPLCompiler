@@ -342,7 +342,7 @@ public class LexiconHtml {
 	private String getLexemeTEXT (String lexStart) throws IOException {
 		String lexReturned = lexStart;
 		char valor = nextChar();
-		while (charText.contains(((char) valor)) && ((char) valor != -1)) {
+		while ( charText.contains(((char) valor)) && ((char) valor != -1) ) {
 			lexReturned = lexReturned+((char) valor);
 			valor=nextChar();
 		}
@@ -352,7 +352,7 @@ public class LexiconHtml {
 	
 	// Crea un conjunto con los caracteres permitidos para los lexemas de texto (TEXT)
 	private void loadSet () {
-		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:+-*/()[]!? ";
+		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:+-*/()[]!? \n";
 		int i=0;
 		Character a = new Character('a');
 		while (i < s.length()) {
